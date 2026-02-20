@@ -1,12 +1,7 @@
-import { Layout } from './components/layout/Layout';
+import {AppRouter} from './router/AppRouter.tsx';
 
 function App() {
-    return (
-        <Layout>
-            <h1>Bienvenido a Project-T</h1>
-            <p>Aquí irá el contenido de la app</p>
-        </Layout>
-    );
+    return <AppRouter/>
 }
 
 export default App;

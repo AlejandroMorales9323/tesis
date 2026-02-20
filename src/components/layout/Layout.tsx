@@ -1,13 +1,9 @@
 import { AppShell, Burger, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { ReactNode } from 'react';
+import {Outlet} from 'react-router-dom'
 
 
-type LayoutProps = {
-    children: ReactNode;
-};
-
-export function Layout({ children }: LayoutProps) {
+export function Layout() {
     const [opened, { toggle }] = useDisclosure();
 
     return (
@@ -26,9 +22,9 @@ export function Layout({ children }: LayoutProps) {
             <AppShell.Navbar p="md">
                 <Text c="dimmed" size="sm">Menú</Text>
             </AppShell.Navbar>
-
+            <Outlet/>
             <AppShell.Main>
-                {children}
+
             </AppShell.Main>
         </AppShell>
     );
