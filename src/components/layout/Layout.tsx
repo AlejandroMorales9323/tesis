@@ -22,9 +22,9 @@ export function Layout() {
             <AppShell.Navbar p="md">
                 <Text c="dimmed" size="sm">Menú</Text>
             </AppShell.Navbar>
-            <Outlet/>
-            <AppShell.Main>
 
+            <AppShell.Main>
+                <Outlet/>
             </AppShell.Main>
         </AppShell>
     );
