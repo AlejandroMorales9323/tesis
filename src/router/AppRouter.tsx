@@ -7,9 +7,9 @@ import {NotFoundPage} from '../pages/NotFoundPage.tsx';
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <Layout />,
-        children: [
+        path: "/", // esto es la recepción
+        element: <Layout />, // layout es el edificio completo
+        children: [ // children son las habitaciones del edicifio o las puertas
             {index: true,element: <TodoListPage/>},
             {path: "new", element: <TodoCreatePage/>},
             {path: "todo/:id", element: <TodoDetailPage/>},
