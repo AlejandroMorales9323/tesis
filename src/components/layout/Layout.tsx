@@ -22,7 +22,6 @@ export function Layout() {
             <AppShell.Navbar p="md">
                 <Text c="dimmed" size="sm">Menú</Text>
             </AppShell.Navbar>
-
             <AppShell.Main>
                 <Outlet/>
             </AppShell.Main>
