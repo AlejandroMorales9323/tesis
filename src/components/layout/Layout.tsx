@@ -23,7 +23,6 @@ export function Layout() {
             <AppShell.Navbar p="md">
                 <Text c="dimmed" size="sm">Menú</Text> {/*c="dimmed" es el tipo de texto*/}
             </AppShell.Navbar>
-
             <AppShell.Main>
                 <Outlet/> {/*esta cosa guarda el contenido de todolist tododetail y todocreate*/}
             </AppShell.Main>
