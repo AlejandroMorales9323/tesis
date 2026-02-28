@@ -7,15 +7,27 @@ type TodoFormProps = {
 
 export function TodoForm({ onSubmit }: TodoFormProps) {
     const [title, setTitle] = useState<string>('');
+    const [error, setError] = useState<string>('');
+    const handleSubmit = () => {
+        if (title === "") {
+            setError('necesita un titulo');
+        } else {
+            //onSubmit && onSubmit(title);
+            onSubmit(title);
+            setTitle('');
+            setError('');
+        }
+    }
     return (
         <>
             <Group>
                 <TextInput
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}>
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}>
 
                 </TextInput>
-                <Button onClick={() => onSubmit(title)}>
+                {error && <p>{error}</p>}
+                <Button onClick={handleSubmit}>
                     Agregar
                 </Button>
             </Group>
