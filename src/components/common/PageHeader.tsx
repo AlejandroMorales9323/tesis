@@ -8,4 +8,3 @@ export function PageHeader({title}: PageHeaderProps) {
         <h1>{title}</h1>
     );
 }
-
