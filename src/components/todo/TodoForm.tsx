@@ -24,7 +24,6 @@ export function TodoForm({ onSubmit }: TodoFormProps) {
                 <TextInput
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}>
-
                 </TextInput>
                 {error && <p>{error}</p>}
                 <Button onClick={handleSubmit}>
