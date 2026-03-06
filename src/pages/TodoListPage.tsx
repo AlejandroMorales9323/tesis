@@ -4,7 +4,7 @@ import { TodoList } from "../components/todo/TodoList.tsx";
 import {TextInput} from "@mantine/core";
 import {TodoFilters} from "../components/todo/TodoFilters.tsx";
 import {axiosClient} from "../api/axiosClient.ts";
-
+import {notifications} from "@mantine/notifications";
 //const MOCK_TODOS: Tod0[] = [
   //  { id: 1, title: "Comprar medicamentos", completed: false },
     //{ id: 2, title: "Revisar inventario", completed: true },
@@ -27,6 +27,7 @@ export function TodoListPage() {
     // setLoading(false);     // ya no carga
     //}, 1500);
     //}, []);
+
     //ahora tenemos datos dinamicos desde la url /todos?_limit=20
     // .then se ejecuta cuando la petición fue exitosa. No "busca"
     // sino que recibe los datos que llegaron y hace algo con ellos.
@@ -69,8 +70,29 @@ export function TodoListPage() {
         // y da un true o false
         .filter((t)=>t.title.toLowerCase().includes(debouncedSearch.toLowerCase()));
     // Funciones que pasarás a TodoList
+    // optimisacion ui completada se implemento un const con un estadoanterior
+    //donde si falla tod0 vuelve a su estado original
+    //se implemento un settod0 que recorre tod0 y se uso un ternario para hacer una comparación entre id
+    //se le puso ...t para que pueda tomar todos los valores y compare completed: con !t.completed
+    //esto quiere decir que al marcar casillas y esas casillas estan llenas lo muestra si no estan llenas no las mostrara
+    // se implemento un axion pero con un patch esto Modifica algo existente dentro de la url y si esta completo lo deja en true
+    //.then se mantiene en blanco por ahora
+    //catch tiene el roll back con una notificacion y configurada con sus propiedades
     const handleToggle = (id: number) => {
-        console.log("Toggle:", id);
+        const estadoAnterior= todo
+        setTodo(todo.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+        axiosClient.patch(`/todos/${id}`, {completed: true})
+            .then(() =>{
+
+            })
+        .catch(()=>{
+            setTodo(estadoAnterior);
+            notifications.show({
+                title: 'Error',
+                message: 'lo siento te equivocaste',
+                color:'red'
+            })
+        })
     };
 
     const handleDelete = (id: number) => {
