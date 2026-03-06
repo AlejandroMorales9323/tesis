@@ -3,12 +3,13 @@ import type { Todo } from '../types/todo.ts';
 import { TodoList } from "../components/todo/TodoList.tsx";
 import {TextInput} from "@mantine/core";
 import {TodoFilters} from "../components/todo/TodoFilters.tsx";
+import {axiosClient} from "../api/axiosClient.ts";
 
-const MOCK_TODOS: Todo[] = [
-    { id: 1, title: "Comprar medicamentos", completed: false },
-    { id: 2, title: "Revisar inventario", completed: true },
-    { id: 3, title: "Llamar al proveedor", completed: false },
-];
+//const MOCK_TODOS: Tod0[] = [
+  //  { id: 1, title: "Comprar medicamentos", completed: false },
+    //{ id: 2, title: "Revisar inventario", completed: true },
+    //{ id: 3, title: "Llamar al proveedor", completed: false },
+//];
 
 export function TodoListPage() {
     const [todo, setTodo] = useState<Todo[]>([]);
@@ -17,13 +18,33 @@ export function TodoListPage() {
     const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
     const [search, setSearch] = useState<string>("");
     const [debouncedSearch, setDebouncedSearch] = useState<string>("");
-    useEffect(() => {
-        // simula que los datos tardan 1.5 segundos en llegar
-        setTimeout(() => {
-            setTodo(MOCK_TODOS);  // llegan los datos
-            setLoading(false);     // ya no carga
-        }, 1500);
-    }, []);
+
+
+    //useEffect(() => {
+    // simula que los datos tardan 1.5 segundos en llegar
+    //  setTimeout(() => {
+    //   setTodo(MOCK_TODOS);  // llegan los datos
+    // setLoading(false);     // ya no carga
+    //}, 1500);
+    //}, []);
+    //ahora tenemos datos dinamicos desde la url /todos?_limit=20
+    // .then se ejecuta cuando la petición fue exitosa. No "busca"
+    // sino que recibe los datos que llegaron y hace algo con ellos.
+    //.catch se ejecuta cuando la petición falló. Por ejemplo si no hay internet,
+    // el servidor está caído, o la URL es incorrecta.
+    useEffect(() =>{
+        axiosClient.get('/todos?_limit=20')
+            .then((responde) =>{
+                setTodo(responde.data);
+                setLoading(false);
+                })
+            .catch(()=>{
+                setError('Error intentelo nuevamente');
+                setLoading(false);
+                }
+            )
+        },[]);
+
     useEffect(() => {
         // cuando el usuario escribe crea un timer de 300 milisegundos
         const timer = setTimeout(() => {
@@ -32,7 +53,7 @@ export function TodoListPage() {
             }, 300);
         //limpia el efecto y cancela el timer
         return () => clearTimeout(timer);
-    }, [search]);
+    }, [search]); // gatilla el useefect si se gatilla el search
     // esta es una funcion recorre cada tarea y en base a los if decide que incluir y que no
     const filteredTodo = todo.filter((t)=>{
         if (filter === "all")
