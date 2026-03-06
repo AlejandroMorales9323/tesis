@@ -9,7 +9,7 @@ export function TodoItem ({todo, onToggle, onDelete} : TodoItemProps) {
     // esto crea el componente y saca los datos del prop
     return(
         <div> {/*esto es una caja*/}
-            <p>Mi lista</p>
+            <p>{todo.title}</p>
             <input
                 type="checkbox"
                 checked={todo.completed}
