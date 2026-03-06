@@ -8,8 +8,14 @@ type PreferencesContextProps = {
 const PreferencesContext = createContext<PreferencesContextProps>({
     showCompleted: true
 });
+
 // children da aviso al padre y react node renderiza en pantalla
 //
+
+// react node es un renderizador aqui children le avisa al componente padre y se renderiza
+//showCompleted es una pregunta que te devuelve un boleano como que hace una pregunta ¿esta tarea esta completa? si o no true o false
+// se envuelve children dentro de la funcion preferenceprovider con los valores del estado para que estos hagan la pregunta
+
 export function PreferencesProvider({ children }: {children: React.ReactNode }) {
     const [showCompleted, setShowCompleted] = useState<boolean>(true);
     return (
